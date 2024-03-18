@@ -1,3 +1,3 @@
 import { SearchDtoBase } from './bases/search-dto-base';
 
-export class GetProgressNoteDto extends SearchDtoBase {}
+export class GetConsultationDto extends SearchDtoBase {}

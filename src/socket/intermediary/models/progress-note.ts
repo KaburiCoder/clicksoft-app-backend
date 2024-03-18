@@ -1,4 +1,5 @@
 export class ProgressNote {
+  id: string;
   /**
    * 작성일자
    */

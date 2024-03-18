@@ -1,4 +1,5 @@
 export class NursingRecord {
+  id: string;
   /**
    * 작성일자
    */
