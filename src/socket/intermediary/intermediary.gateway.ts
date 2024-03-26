@@ -23,6 +23,7 @@ import { GetScanImageDto } from './models/dtos/get-scan-image.dto';
 import { GetConsultationDto } from './models/dtos/get-consultation.dto';
 import { GetObservationChartDto } from './models/dtos/get-observation-chart.dto';
 import { GetBasicExamDto } from './models/dtos/get-basic-exam.dto';
+import { GetPrescriptionDto } from './models/dtos/get-prescription.dto';
 
 @WebSocketGateway({
   transports: ['websocket'],
@@ -169,6 +170,14 @@ export class IntermediaryGateway
     @MessageBody() dto: GetBasicExamDto
   ) {
     return await this.service.getCommon(socket, dto, 'getBasicExam');
+  }
+
+  @SubscribeMessage('getPrescription')
+  async getPrescription(
+    @ConnectedSocket() socket: Socket,
+    @MessageBody() dto: GetPrescriptionDto
+  ) {
+    return await this.service.getCommon(socket, dto, 'getPrescription');
   }
 
   @SubscribeMessage('test')
