@@ -10,6 +10,7 @@ import { SearchDtoBase } from './models/dtos/bases/search-dto-base';
 import { Scan } from './models/scan';
 import { removeEmptyObj } from './lib/object.util';
 import { ObservationChart } from './models/observation-chart';
+import { CerticiationDto } from './models/dtos/certification.dto';
 
 @Injectable()
 export class IntermediaryService {
@@ -62,6 +63,26 @@ export class IntermediaryService {
     return dataList;
   }
 
+  @ConstructDto
+  async certification(client: Socket, dto: CerticiationDto) {
+    try {
+      const toId = this.roomCollection.getLocalClientId(dto.key);
+      const ev = 'certification';
+
+      const ack = await this.server
+        .to(toId)
+        .timeout(10000)
+        .emitWithAck(ev, { ...dto });
+
+      const result = ack?.[0];
+
+      return result;
+    } catch (error) {
+      return this.returnError();
+    }
+  }
+
+  
   @ConstructDto
   async getCommon<TDto>(
     client: Socket,

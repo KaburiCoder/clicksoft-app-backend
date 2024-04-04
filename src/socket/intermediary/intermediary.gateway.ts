@@ -24,6 +24,7 @@ import { GetConsultationDto } from './models/dtos/get-consultation.dto';
 import { GetObservationChartDto } from './models/dtos/get-observation-chart.dto';
 import { GetBasicExamDto } from './models/dtos/get-basic-exam.dto';
 import { GetPrescriptionDto } from './models/dtos/get-prescription.dto';
+import { CerticiationDto } from './models/dtos/certification.dto';
 
 @WebSocketGateway({
   transports: ['websocket'],
@@ -68,6 +69,14 @@ export class IntermediaryGateway
     this.roomCollection.remove(socket, dto);
   }
 
+  @SubscribeMessage('certification')
+  async certification(
+    @ConnectedSocket() socket: Socket,
+    @MessageBody() dto: CerticiationDto
+  ) {
+    return await this.service.certification(socket, dto);
+  }
+  
   @SubscribeMessage('getPatientInfo')
   async getPatientInfo(
     @ConnectedSocket() socket: Socket,
