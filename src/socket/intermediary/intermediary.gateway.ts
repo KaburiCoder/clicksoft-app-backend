@@ -82,7 +82,7 @@ export class IntermediaryGateway
     @ConnectedSocket() socket: Socket,
     @MessageBody() dto: GetPatientInfoDto
   ) {
-    return await this.service.getPatientInfo(socket, dto);
+    return await this.service.getCommon(socket, dto, 'getPatientInfo');
   }
 
   @SubscribeMessage('getProgressNote')
