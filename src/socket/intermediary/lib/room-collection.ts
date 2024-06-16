@@ -35,7 +35,7 @@ export class RoomCollection {
 
   getLocalClientId(room: string) {
     const client = this.getLocalClient(room);
-    return client.client.id;
+    return client?.client.id;
   }
 
   /**
@@ -45,8 +45,8 @@ export class RoomCollection {
    */
   getJoinInfo(client: Socket): JoinRoomDto {
     const data = this.rooms.find((r) => r.client.id === client.id);
-    const { client: _, ...joinInfo } = data;
-    return joinInfo;
+    const { client: _, ...joinInfo } = data || {};
+    return joinInfo as JoinRoomDto;
   }
 
   getJoinInfoAndToId(client: Socket) {

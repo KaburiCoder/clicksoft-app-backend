@@ -14,7 +14,7 @@ import { CerticiationDto } from './models/dtos/certification.dto';
 
 @Injectable()
 export class IntermediaryService {
-  constructor(private readonly roomCollection: RoomCollection) {}
+  constructor(private readonly roomCollection: RoomCollection) { }
   private server: Server;
 
   private returnError(): ResultBase {
@@ -36,7 +36,7 @@ export class IntermediaryService {
       const { joinInfo, toId } = this.roomCollection.getJoinInfoAndToId(client);
 
       const ack = await this.server
-        .to(toId)
+        .to(toId!)
         .timeout(30000)
         .emitWithAck('getPatientInfo', {
           userId: joinInfo.localId,
@@ -70,7 +70,7 @@ export class IntermediaryService {
       const ev = 'certification';
 
       const ack = await this.server
-        .to(toId)
+        .to(toId!)
         .timeout(10000)
         .emitWithAck(ev, { ...dto });
 
@@ -82,7 +82,7 @@ export class IntermediaryService {
     }
   }
 
-  
+
   @ConstructDto
   async getCommon<TDto>(
     client: Socket,
@@ -93,7 +93,7 @@ export class IntermediaryService {
       const { joinInfo, toId } = this.roomCollection.getJoinInfoAndToId(client);
 
       const ack = await this.server
-        .to(toId)
+        .to(toId!)
         .timeout(10000)
         .emitWithAck(ev, {
           ...dto,
