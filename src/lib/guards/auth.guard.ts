@@ -45,7 +45,7 @@ export class AuthGuard implements CanActivate {
     if (!refreshToken) return false;
 
     // RefreshToken 인증
-    payload = await this.authSvc.verifyToken(refreshToken, process.env.JWT_REFRESH_SECRET);
+    payload = await this.authSvc.verifyToken(refreshToken, process.env.JWT_RF_KEY);
     if (payload) {
       const user = await this.usersSvc.findOneById(payload.sub);
       if (!user) return false;

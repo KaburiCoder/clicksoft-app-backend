@@ -50,7 +50,7 @@ export class CurrentUserMiddleware implements NestMiddleware {
     if (!refreshToken) return next();
 
     // RefreshToken 인증
-    payload = await this.authSvc.verifyToken(refreshToken, process.env.JWT_REFRESH_SECRET);
+    payload = await this.authSvc.verifyToken(refreshToken, process.env.JWT_RF_KEY);
     if (payload) {
       const user = await this.usersSvc.findOneById(payload.sub);
       if (!user) return next();

@@ -44,7 +44,7 @@ export class AuthService {
     return tokens;
   }
 
-  async verifyToken(token: string, secret: string = process.env.JWT_SECRET!): Promise<JwtPayload | undefined> {
+  async verifyToken(token: string, secret: string = process.env.JWT_KEY!): Promise<JwtPayload | undefined> {
     try {
       return await this.jwtSvc.verifyAsync(token, { secret }) as JwtPayload;
     } catch (error) {
@@ -67,7 +67,7 @@ export class AuthService {
   }
 
   private async createRefreshToken(payload: JwtPayload) {
-    const refreshToken = await this.jwtSvc.signAsync(payload, { secret: process.env.JWT_REFRESH_SECRET, expiresIn: "2d" });
+    const refreshToken = await this.jwtSvc.signAsync(payload, { secret: process.env.JWT_RF_KEY, expiresIn: "2d" });
     return refreshToken;
   }
 }
