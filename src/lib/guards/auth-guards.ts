@@ -1,5 +1,5 @@
 import { UseGuards } from "@nestjs/common"
-import { AuthGuard } from "./auth-guard"
+import { AuthGuard } from "./auth.guard"
 
 export const AuthGuards = () => {
   return UseGuards(AuthGuard)

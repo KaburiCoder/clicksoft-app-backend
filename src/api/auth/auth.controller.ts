@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, Res, Req } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, Res, Req, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignupDto as SignupDto, SignupResponse, signupSchema } from './dto/sign-up.dto';
 import { SigninDto } from './dto/sign-in.dto';
@@ -9,6 +9,9 @@ import { CurrentUser } from '@/lib/decorators/current-user';
 import { User } from '@/db/mongo-schema/user.schema';
 import { AuthGuards } from '@/lib/guards/auth-guards';
 import { RefreshTokenService } from '@/refresh-token/refresh-token.service';
+import { RolesGuard } from '@/lib/guards/roles.guard';
+import { Roles } from '@/lib/decorators/roles.decorator';
+import { AuthGuard } from '@/lib/guards/auth.guard';
 
 @Controller('/api2/auth')
 export class AuthController {
@@ -40,7 +43,7 @@ export class AuthController {
     res.status(200).send(true);
   }
 
-  @AuthGuards()
+  @UseGuards(AuthGuard)
   @HttpCode(200)
   @Post("/currentuser")
   async currentUser(@CurrentUser() user: User) {
