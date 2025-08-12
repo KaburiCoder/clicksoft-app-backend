@@ -9,7 +9,7 @@ RUN corepack enable pnpm && pnpm install --frozen-lockfile;
 
 COPY . .
 
-RUN npm run build
+RUN pnpm build
 
 # Production
 FROM node:22-alpine3.22
@@ -17,7 +17,7 @@ FROM node:22-alpine3.22
 RUN apk add --no-cache openssl
 
 WORKDIR /app
- 
+
 ENV NODE_ENV=production 
 
 COPY --from=builder /app/node_modules ./node_modules

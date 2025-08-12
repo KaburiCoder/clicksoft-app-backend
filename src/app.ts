@@ -1,16 +1,16 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { corsConfig } from './config/configs/cors.config';
-import * as express from 'express';
+import { NestExpressApplication } from '@nestjs/platform-express';
 import * as path from 'path';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 
 
 export async function RunApp() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
   app.setGlobalPrefix('api');
-  app.use("/", express.static(path.join(__dirname, "..", "public")));
+  app.useStaticAssets(path.join(__dirname, "..", "public"), { prefix: "/" });
 
   app.enableCors(corsConfig)
   await app.listen(3000);
